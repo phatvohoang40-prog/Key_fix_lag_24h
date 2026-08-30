@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>phat.fixlag Key System</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{background:#0a0a0a;color:#fff;font-family:Gotham;text-align:center;padding-top:50px}
+h1{color:#00ff88;font-size:28px;margin-bottom:5px}
+p{color:#aaa;margin-bottom:30px}
+.btn{background:#00ff88;color:#000;border:none;padding:20px 40px;font-size:22px;border-radius:12px;cursor:pointer;font-weight:bold;margin:10px;transition:0.2s}
+.btn:hover{transform:scale(1.05)}
+.key{margin-top:20px;font-size:30px;color:#ff0;font-weight:bold;letter-spacing:3px;min-height:40px}
+.box{background:#1a1a1a;padding:25px;border-radius:12px;margin:20px auto;width:90%;max-width:450px;border:1px solid #00ff88}
+.note{font-size:12px;color:#666;margin-top:10px}
+</style>
+</head>
+<body>
+<h1>phat.fixlag</h1>
+<p>Hệ thống cấp key tự động</p>
+
+<div class="box">
+  <p><b>Key 24H - Random</b></p>
+  <button class="btn" onclick="genKey('24h')">Lấy Key 24h</button>
+  <div class="key" id="k24">...</div>
+  <p class="note">Bấm để tạo code mới. Dùng được 1 lần</p>
+</div>
+
+<div class="box">
+  <p><b>Key VV - Random</b></p>
+  <button class="btn" onclick="genKey('vv')">Lấy Key VV</button>
+  <div class="key" id="kvv">...</div>
+  <p class="note">Key vĩnh viễn</p>
+</div>
+
+<script>
+function randomStr(len){
+  let chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  let str = "";
+  for(let i=0;i<len;i++){
+    str += chars.charAt(Math.floor(Math.random()*chars.length));
+  }
+  return str;
+}
+
+function genKey(type){
+  let key = "";
+  if(type == "24h"){
+    key = "Phat.@" + randomStr(4); // VD: Phat.@A7B2
+    document.getElementById("k24").innerText = key;
+  } else {
+    key = "Phat.VV" + randomStr(5); // VD: Phat.VV9X4K2
+    document.getElementById("kvv").innerText = key;
+  }
+  navigator.clipboard.writeText(key);
+}
+
+// Copy khi click vào key
+document.getElementById("k24").onclick = () => navigator.clipboard.writeText(document.getElementById("k24").innerText);
+document.getElementById("kvv").onclick = () => navigator.clipboard.writeText(document.getElementById("kvv").innerText);
+</script>
+</body>
+</html>
